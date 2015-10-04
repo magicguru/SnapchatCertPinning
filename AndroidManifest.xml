@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.liamcottle.xposed.snapchat.nocertpinning">
+
+    <uses-sdk android:minSdkVersion="14"/>
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+
+        <!-- Xposed Module Configuration -->
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data android:name="xposedminversion" android:value="30" />
+        <meta-data android:name="xposeddescription" android:value="@string/info_xposed_description" />
+        <!-- \Xposed Module Configuration -->
+    </application>
+
+</manifest>
