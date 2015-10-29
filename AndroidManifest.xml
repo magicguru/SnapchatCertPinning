@@ -11,6 +11,7 @@
         <meta-data android:name="xposedminversion" android:value="30" />
         <meta-data android:name="xposeddescription" android:value="@string/info_xposed_description" />
         <!-- \Xposed Module Configuration -->
+
     </application>
 
 </manifest>

@@ -1,12 +1,10 @@
 package com.liamcottle.xposed.snapchat.nocertpinning;
 
-import android.app.Application;
-import android.content.Context;
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.*;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
+
+import javax.net.ssl.TrustManagerFactory;
+import java.security.KeyStore;
 
 public class Main implements IXposedHookLoadPackage {
 
@@ -17,25 +15,11 @@ public class Main implements IXposedHookLoadPackage {
             return;
         }
 
-        XposedBridge.log("Loaded Package: com.snapchat.android");
-
-        XposedHelpers.findAndHookMethod(Application.class, "attach", Context.class, new XC_MethodHook() {
+        XposedHelpers.findAndHookMethod(TrustManagerFactory.class, "init", KeyStore.class, new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-
-                XposedBridge.log("Hooked Method: " + param.method.getName());
-
-                Class aauClass = XposedHelpers.findClass("aau", lpparam.classLoader);
-
-                XposedHelpers.findAndHookConstructor(aauClass, new XC_MethodHook() {
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-
-                        XposedBridge.log("Hooked Constructor: " + param.method.getName());
-                        XposedHelpers.setBooleanField(param.thisObject, "mAllowURIMigration", false);
-                    }
-                });
-
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                XposedBridge.log("Removed Snapchat's KeyStore! ;)");
+                param.args[0] = null;
             }
         });
 
